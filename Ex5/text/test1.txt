@@ -1,0 +1,4 @@
+Gợi ý: trả$$$
+os.listdir(path) sẽ trả lại danh sách các file/thư mục con bên trong path
+Với mỗi file bên trong path, đọc từng dòng, trả kiểm tra xem x có trong dòng đó hay không, nếu có thì đưa kết quả vào danh sách chứa kết quả và làm việc với file tiếp theo.
+thực hiện cho đến khi hết các file trả
