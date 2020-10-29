@@ -211,12 +211,17 @@ class BinarySearchTree:
         
         return self.sumSubTree(node.right)
         
-    def tilt(self, node):
-        if node:
-            return abs()
-        else:
+    def tilt(self, node, result):
+        if (not node):
             return 0
-   
+
+        left = self.tilt(node.left, result)
+        right = self.tilt(node.right, result)
+
+        result[0] += abs(left - right)
+
+        return left + right + node.val
+
     def getTilt(self):
         '''
             Hàm tính độ nghiêng của cây,
@@ -228,7 +233,9 @@ class BinarySearchTree:
             con phải của node đó)
             
         '''
-        return self.tilt(self.root)
+        result = [0]
+        self.tilt(self.root, result)
+        return result[0]
     
     
 
