@@ -137,23 +137,22 @@ def sinhTaylor(x, e):
      
     '''
     sinh = 0
-    sinh_i = sinh
+    sinh_i = 0
     sinh_i1 = 0
 
     check = x
 
     i = 1
     while( check > e ):
-        sinh_i1 = sinh
         sinh += pow(x, i) / factorial(i)
+        check = round(pow(x, i) / factorial(i), 5)
+        
         sinh_i = sinh
-        check = round(abs(sinh_i - sinh_i1), 5)
-        print('i:',sinh_i, 'i-1:', sinh_i1, 'ch:', check)
-        print('p:',sinh)
-
         i += 2
 
-    return sinh
+        sinh_i += pow(x, i) / factorial(i)
+
+    return sinh_i
 
 '''
     Chú ý, các phương thức sẽ được gọi đến để chấm điểm, 
@@ -178,4 +177,4 @@ filename = './Ex6/text/test2.txt'
 print(getTopWord(filename, 6))
 print(getVector(filename, getTopWord(filename, 5)))
 print(round(getCosineSim([1,2,3,4], [1,2,1,1]), 5))
-print(round(sinhTaylor(5.5, 0.00001),5))
+print(round(sinhTaylor(5.5, 0.5),5))
