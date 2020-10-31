@@ -18,6 +18,8 @@ def sortCount(lists):
                     lists[j] = temp
         
     return lists
+def comper(x):
+    return x[1], x[0]
 
 def getTopWord(filename, n):
     '''
@@ -56,11 +58,13 @@ def getTopWord(filename, n):
         tup = (i, counts)
         dataCount.append(tup)
 
-    dataChar = sortCount(dataCount)
+    # dataChar = sortCount(dataCount)
+    dataCount.sort(key=comper, reverse= True)
     lists = []
 
     for i in range(0, n):
-        lists.append(dataChar[i][0])
+        # lists.append(dataChar[i][0])
+        lists.append(dataCount[i][0])
 
     lists.sort(reverse=True)
     return lists
