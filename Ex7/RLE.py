@@ -17,14 +17,20 @@ def length(t):
     
 def compress(t):
     ct = []
-    temp = dict()
+    temp = []
     
     b = t.copy()
 
     for i in range(len(t)):
-        temp.update({i: t[i]})
-
-
+        x = t[i]
+        y = []
+        for j in range(len(t)):
+            if t[i] == t[j]:
+                y.append(j)
+        tm = [x, y]
+        temp.append(tm)
+    
+    
 
     return ct
 
