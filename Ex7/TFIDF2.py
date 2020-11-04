@@ -1,3 +1,6 @@
+import os
+import math
+
 class Doc:
     '''
     Lớp mô tả một đối tượng văn bản, lớp này có 1 thuộc tính là wordCount kiểu từ điển
@@ -25,8 +28,19 @@ class Doc:
         
         '''
         
-        pass
-    
+        file = open(filename, 'rt', encoding='utf-8')
+        data = file.read().strip().split()
+        sets = set(data)
+
+        for i in sets:
+            count = data.count(i)
+            self.wordCount.update({i : count})
+
+        return self.wordCount
+
+def compares(x):
+    return x[1], x[0]
+
 class TFIDF:
     '''
         Lớp mô tả việc tính chỉ số TFIDF cho các từ trong văn bản dựa trên kho văn bản
@@ -56,7 +70,13 @@ class TFIDF:
         chấm điểm
         
         '''
-        pass
+        path = os.listdir(corpusPath)
+
+        for i in path:
+            filename = corpusPath + '/' + i
+            self.data.update({i : Doc(filename)})
+        
+        return self.data
     
     def tf(self,w,d):
         '''
@@ -67,8 +87,13 @@ class TFIDF:
         - khi đó tf(w,d) = tfw/tfm (ví dụ 3/6 = 0.5)
         
         '''
+        tfw = 0
+        tfm = max(d.wordCount.values())
+
+        if w in d.wordCount:
+            tfw = d.wordCount[w]
         
-        return 0
+        return tfw / tfm
     
     def idf(self, w):
         '''
@@ -80,7 +105,14 @@ class TFIDF:
         
         CHÚ Ý DÙNG math.log để tính log
         '''
-        return 0
+        n = len(self.data)
+        m = 0
+
+        for i in self.data:
+            if w in self.data[i].wordCount:
+                m += 1
+
+        return math.log(n / (1 + m))
     
     def tfidf(self, w, d):
         '''
@@ -89,8 +121,7 @@ class TFIDF:
         tfidf(w, d) = tf(w,d) * idf(w)
         '''
         
-        return 0
-    
+        return self.tf(w, d) * self.idf(w)
     
     def getKTopicWordFromCopus(self, k):
         '''
@@ -102,6 +133,22 @@ class TFIDF:
         từ có chỉ số tfidf cao nhất, tuy nhiên kết quả chỉ lấy 1 từ 
         (có nghĩa là trong danh sách kết quả, k từ đôi một khác nhau)
         '''
+        lists = []
+        klist = []
+
+        for i in self.data.values():
+            for j in i.wordCount:
+                lists.append((j, self.tfidf(j, i)))
         
-        pass
+        sets = set(lists)
+        nlists = list(sets)
+        nlists.sort(key=compares, reverse=True)
+
+        for i in range(min(k, len(lists))):
+            klist.append(nlists[i][0])
+        
+        klist.sort()
+
+        return klist
+
     
