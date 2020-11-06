@@ -17,21 +17,7 @@ def length(t):
     
 def compress(t):
     ct = []
-    temp = []
     
-    b = t.copy()
-
-    for i in range(len(t)):
-        x = t[i]
-        y = []
-        for j in range(len(t)):
-            if t[i] == t[j]:
-                y.append(j)
-        tm = [x, y]
-        temp.append(tm)
-    
-    
-
     return ct
 
 print(compress(t))
